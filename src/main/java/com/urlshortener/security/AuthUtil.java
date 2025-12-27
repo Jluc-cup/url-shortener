@@ -13,7 +13,7 @@ public class AuthUtil {
                         .getPrincipal();
     }
 
-    public Integer getSafeUserId() {
+    public static Integer getSafeUserId() {
         final AuthProfileContext profileContext = getCurrent();
         if (profileContext == null) {
             return null;
@@ -21,7 +21,7 @@ public class AuthUtil {
         return profileContext.getUserId();
     }
 
-    public int getUserId() {
+    public static int getUserId() {
         final AuthProfileContext profileContext = getCurrent();
         if (profileContext == null) {
             throw new RuntimeException();

@@ -16,4 +16,17 @@ public class UserDaoImpl implements UserDao {
     private final UserRepository repository;
 
 
+    @Override
+    public UserEntity getById(int userId) {
+        final UserEntity entity = findById(userId);
+        if (entity == null) {
+            throw new RuntimeException();
+        }
+        return entity;
+    }
+
+    @Override
+    public UserEntity findById(int userId) {
+        return repository.findById(userId).orElse(null);
+    }
 }

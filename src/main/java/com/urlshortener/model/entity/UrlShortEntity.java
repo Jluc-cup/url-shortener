@@ -1,5 +1,7 @@
 package com.urlshortener.model.entity;
 
+import com.urlshortener.controller.req.UrlShortCreateReq;
+import com.urlshortener.util.DateTimeUtil;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,25 +34,43 @@ public class UrlShortEntity {
     @Column(name = "original_url", nullable = false, length = 2048)
     private String originalUrl;
 
+    @Column(name = "custom_alias", length = 120)
+    private String customAlias;
+
     @Column(name = "short_url", nullable = false, unique = true)
     private String shortUrl;
 
     @Column(name = "click_count")
     private int clickCount;
 
-    @Column(name = "expires_at")
-    private Instant expiresAt;
-
     @Column(name = "created", nullable = false)
     private Instant created;
 
-    @Column(name = "is_active", nullable = false)
-    private boolean isActive;
-
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private Instant deleted;
 
     @OneToMany(mappedBy = "urlShort", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UrlShortClickEntity> clicks;
 
+    public static UrlShortEntity create(UserEntity user,
+                                        UrlEntity url,
+                                        UrlShortCreateReq req,
+                                        String shortUrl) {
+        return new UrlShortEntity(user, url, req, shortUrl);
+    }
+
+    public UrlShortEntity(UserEntity user, UrlEntity url, UrlShortCreateReq req, String shortUrl) {
+        this.user = user;
+        this.url = url;
+        originalUrl = url.getOriginalUrl();
+        this.customAlias = req.customAlias();
+        this.shortUrl = shortUrl;
+        clickCount = 0;
+        created = DateTimeUtil.getCurrent();
+        deleted = null;
+    }
+
+    public void delete() {
+        deleted = DateTimeUtil.getCurrent();
+    }
 }

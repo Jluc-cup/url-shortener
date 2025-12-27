@@ -33,10 +33,14 @@ public class UrlEntity {
     @Column(name = "created", nullable = false)
     private Instant created;
 
-    @Column(name = "is_blocked", nullable = false)
-    private boolean isBlocked;
-
     @OneToMany(mappedBy = "url", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UrlShortEntity> urlShorts;
 
+    public static UrlEntity create(String originalUrl) {
+        return new UrlEntity(originalUrl);
+    }
+
+    public UrlEntity(String originalUrl) {
+        this.originalUrl = originalUrl;
+    }
 }

@@ -23,7 +23,7 @@ public class TokenDaoImpl implements TokenDao {
 
         final TokenEntity tokenEntity = findByTokenFetchUser(token);
         if (tokenEntity == null) {
-
+            throw new RuntimeException();
         }
         return tokenEntity;
     }
