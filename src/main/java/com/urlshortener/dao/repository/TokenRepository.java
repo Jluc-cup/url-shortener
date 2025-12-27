@@ -2,12 +2,10 @@ package com.urlshortener.dao.repository;
 
 import com.urlshortener.model.entity.TokenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
 
 public interface TokenRepository extends JpaRepository<TokenEntity, Integer> {
 
-    Optional<TokenEntity> findByToken(String token);
-
-    boolean existsByToken(String token);
+    @Query("SELECT t FROM TokenEntity t JOIN FETCH t.user WHERE t.token = :token")
+    TokenEntity findByTokenFetchUser(String token);
 }

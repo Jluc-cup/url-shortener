@@ -29,8 +29,14 @@ public class UrlShortEntity {
     @JoinColumn(name = "url_id", nullable = false)
     private UrlEntity url;
 
+    @Column(name = "original_url", nullable = false, length = 2048)
+    private String originalUrl;
+
     @Column(name = "short_url", nullable = false, unique = true)
     private String shortUrl;
+
+    @Column(name = "click_count")
+    private int clickCount;
 
     @Column(name = "expires_at")
     private Instant expiresAt;
