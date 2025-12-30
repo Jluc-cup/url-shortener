@@ -17,6 +17,8 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public TokenEntity generate(UserEntity user) {
-        return null;
+        final TokenEntity token = TokenEntity.generate(user);
+        tokenDao.saveAndFlush(token);
+        return token;
     }
 }

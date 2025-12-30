@@ -14,6 +14,11 @@ public class TokenDaoImpl implements TokenDao {
 
 
     @Override
+    public void saveAndFlush(TokenEntity entity) {
+        repository.saveAndFlush(entity);
+    }
+
+    @Override
     public TokenEntity findByTokenFetchUser(String token) {
         return repository.findByTokenFetchUser(token);
     }
