@@ -1,6 +1,6 @@
 package com.urlshortener.service;
 
-import com.urlshortener.controller.dto.UrlShortListDto;
+import com.urlshortener.controller.dto.UrlShortListResp;
 import com.urlshortener.controller.req.UrlShortCreateReq;
 
 public interface UrlShortService {
@@ -9,5 +9,5 @@ public interface UrlShortService {
 
     void delete(int userId, int urlShortId);
 
-    UrlShortListDto getUserUrls(int userId, int page, int pageSize);
+    UrlShortListResp getUserUrls(int userId, int page, int pageSize);
 }

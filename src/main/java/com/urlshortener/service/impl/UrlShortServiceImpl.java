@@ -1,6 +1,6 @@
 package com.urlshortener.service.impl;
 
-import com.urlshortener.controller.dto.UrlShortListDto;
+import com.urlshortener.controller.dto.UrlShortListResp;
 import com.urlshortener.controller.req.UrlShortCreateReq;
 import com.urlshortener.dao.UrlDao;
 import com.urlshortener.dao.UrlShortDao;
@@ -73,7 +73,7 @@ public class UrlShortServiceImpl implements UrlShortService {
 
 
     @Override
-    public UrlShortListDto getUserUrls(int userId, int page, int pageSize) {
+    public UrlShortListResp getUserUrls(int userId, int page, int pageSize) {
         return null;
     }
 }

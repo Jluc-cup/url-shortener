@@ -31,9 +31,6 @@ public class UrlShortClickEntity {
     @Column(name = "country_code", length = 2)
     private String countryCode;
 
-    @Column(name = "referrer", length = 2048)
-    private String referrer;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "device_type")
     private DeviceType DeviceType;

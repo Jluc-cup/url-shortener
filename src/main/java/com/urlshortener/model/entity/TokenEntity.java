@@ -27,9 +27,6 @@ public class TokenEntity {
     @Column(name = "token", nullable = false, unique = true, length = 512)
     private String token;
 
-    @Column(name = "expires_at", nullable = false)
-    private Instant expiresAt;
-
     @Column(name = "created", nullable = false)
     private Instant created;
 
