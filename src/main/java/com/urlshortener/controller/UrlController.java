@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/url")
+@RequestMapping()
 @RequiredArgsConstructor
 public class UrlController {
 
@@ -17,7 +17,7 @@ public class UrlController {
     private final UrlShortService urlShortService;
 
 
-    @PostMapping("/shorten")
+    @PostMapping("/api/v1/url/shorten")
     public IdResp create(@RequestBody UrlShortCreateReq req) {
         int userId = AuthUtil.getUserId();
         int urlShortId = urlShortService.create(userId, req);
@@ -25,14 +25,14 @@ public class UrlController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
+    @DeleteMapping("/api/v1/url/shorten/{shortenId}")
+    public void delete(@PathVariable int shortenId) {
         int userId = AuthUtil.getUserId();
-        urlShortService.delete(userId, id);
+        urlShortService.delete(userId, shortenId);
     }
 
 
-    @GetMapping("/my")
+    @GetMapping("/api/v1/url/shorten/my")
     public UrlShortListResp getUserUrls(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "10") int pageSize) {
         int userId = AuthUtil.getUserId();

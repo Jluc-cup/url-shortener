@@ -17,6 +17,16 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
+    public void saveAndFlush(UserEntity entity) {
+        repository.saveAndFlush(entity);
+    }
+
+    @Override
+    public boolean existByEmail(String email) {
+        return repository.existByEmail(email);
+    }
+
+    @Override
     public UserEntity getById(int userId) {
         final UserEntity entity = findById(userId);
         if (entity == null) {
@@ -28,5 +38,19 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserEntity findById(int userId) {
         return repository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public UserEntity getByEmail(String email) {
+        final UserEntity entity = findByEmail(email);
+        if (entity == null) {
+            throw new RuntimeException();
+        }
+        return entity;
+    }
+
+    @Override
+    public UserEntity findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 }
