@@ -5,7 +5,12 @@ import com.urlshortener.dao.UrlShortDao;
 import com.urlshortener.dao.repository.UrlShortRepository;
 import com.urlshortener.model.entity.UrlShortEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+
+import java.util.List;
 
 
 @Repository
@@ -31,5 +36,16 @@ public class UrlShortDaoImpl implements UrlShortDao {
     @Override
     public UrlShortEntity findByIdFetchUser(int urlShortId) {
         return repository.findByIdFetchUser(urlShortId);
+    }
+
+    @Override
+    public List<UrlShortEntity> getUserUrls(int userId, int page, int pageSize) {
+        final Pageable pageable = PageRequest.of(page, pageSize);
+        return repository.getUserUrls(userId, pageable);
+    }
+
+    @Override
+    public int getCountByUserId(int userId) {
+        return repository.getCountByUserId(userId);
     }
 }

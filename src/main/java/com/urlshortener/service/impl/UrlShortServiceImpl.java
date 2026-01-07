@@ -1,5 +1,6 @@
 package com.urlshortener.service.impl;
 
+import com.urlshortener.controller.dto.UrlShortItemResp;
 import com.urlshortener.controller.dto.UrlShortListResp;
 import com.urlshortener.controller.req.UrlShortCreateReq;
 import com.urlshortener.dao.UrlDao;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +43,7 @@ public class UrlShortServiceImpl implements UrlShortService {
     @Transactional
     public int createTr(UserEntity user, UrlShortCreateReq req) {
         final UrlEntity url = getOrCreate(req.originalUrl());
-        final UrlShortEntity urlShort = UrlShortEntity.create(user, url, req,null);
+        final UrlShortEntity urlShort = UrlShortEntity.create(user, url, req, null);
 
         urlShortDao.save(urlShort);
         return urlShort.getId();
@@ -80,6 +83,10 @@ public class UrlShortServiceImpl implements UrlShortService {
 
     @Override
     public UrlShortListResp getUserUrls(int userId, int page, int pageSize) {
-        return null;
+        final List<UrlShortEntity> urlShortList = urlShortDao.getUserUrls(userId, page, pageSize);
+        final int totalSize = urlShortDao.getCountByUserId(userId);
+
+        final List<UrlShortItemResp> items = urlShortList.stream().map(UrlShortItemResp::new).toList();
+        return new UrlShortListResp(items, totalSize);
     }
 }
