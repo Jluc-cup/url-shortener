@@ -10,6 +10,8 @@ import com.urlshortener.model.entity.UrlShortEntity;
 import com.urlshortener.model.entity.UserEntity;
 import com.urlshortener.service.UrlShortService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,20 +23,24 @@ public class UrlShortServiceImpl implements UrlShortService {
     private final UrlDao urlDao;
     private final UrlShortDao urlShortDao;
 
-    private final UrlShortServiceImpl self;
+    private UrlShortServiceImpl self;
 
+    @Autowired
+    public void setSelf(@Lazy UrlShortServiceImpl self) {
+        this.self = self;
+    }
 
     @Override
     public int create(int userId, UrlShortCreateReq req) {
-        final UserEntity user = userDao.getById(userId);
+        final UserEntity user = userDao.getById(userId);// race condition
+        // todo descus about race condition hash generate retry ?
         return self.createTr(user, req);
     }
 
     @Transactional
     public int createTr(UserEntity user, UrlShortCreateReq req) {
         final UrlEntity url = getOrCreate(req.originalUrl());
-        final UrlShortEntity urlShort = UrlShortEntity.create(user, url, req,null); // race condition
-        // todo descus about race condition hash generate retry ?
+        final UrlShortEntity urlShort = UrlShortEntity.create(user, url, req,null);
 
         urlShortDao.save(urlShort);
         return urlShort.getId();
