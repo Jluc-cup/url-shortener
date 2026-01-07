@@ -1,4 +1,4 @@
 package com.urlshortener.controller.dto;
 
-public record IdResp(int id) {
+public record IdRespV1(int id) {
 }

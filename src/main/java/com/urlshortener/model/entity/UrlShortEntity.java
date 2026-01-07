@@ -1,6 +1,6 @@
 package com.urlshortener.model.entity;
 
-import com.urlshortener.controller.req.UrlShortCreateReq;
+import com.urlshortener.controller.req.UrlShortCreateReqV1;
 import com.urlshortener.util.DateTimeUtil;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -54,12 +54,12 @@ public class UrlShortEntity {
 
     public static UrlShortEntity create(UserEntity user,
                                         UrlEntity url,
-                                        UrlShortCreateReq req,
+                                        UrlShortCreateReqV1 req,
                                         String shortUrl) {
         return new UrlShortEntity(user, url, req, shortUrl);
     }
 
-    public UrlShortEntity(UserEntity user, UrlEntity url, UrlShortCreateReq req, String shortUrl) {
+    public UrlShortEntity(UserEntity user, UrlEntity url, UrlShortCreateReqV1 req, String shortUrl) {
         this.user = user;
         this.url = url;
         originalUrl = url.getOriginalUrl();

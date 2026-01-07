@@ -1,6 +1,6 @@
 package com.urlshortener.model.entity;
 
-import com.urlshortener.controller.req.SignUpReq;
+import com.urlshortener.controller.req.SignUpReqV1;
 import com.urlshortener.util.DateTimeUtil;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -35,11 +35,11 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UrlShortEntity> urlShorts;
 
-    public static UserEntity create(SignUpReq req) {
+    public static UserEntity create(SignUpReqV1 req) {
         return new UserEntity(req);
     }
 
-    public UserEntity(SignUpReq req) {
+    public UserEntity(SignUpReqV1 req) {
         this.email = req.email();
         this.password = req.password();
         created = DateTimeUtil.getCurrent();

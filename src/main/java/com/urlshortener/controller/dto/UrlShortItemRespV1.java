@@ -3,10 +3,10 @@ package com.urlshortener.controller.dto;
 
 import com.urlshortener.model.entity.UrlShortEntity;
 
-public record UrlShortItemResp() {
+public record UrlShortItemRespV1() {
 
 
-    public UrlShortItemResp(UrlShortEntity e) {
+    public UrlShortItemRespV1(UrlShortEntity e) {
         this();
     }
 }

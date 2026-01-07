@@ -1,8 +1,8 @@
 package com.urlshortener.controller;
 
-import com.urlshortener.controller.dto.IdResp;
-import com.urlshortener.controller.dto.UrlShortListResp;
-import com.urlshortener.controller.req.UrlShortCreateReq;
+import com.urlshortener.controller.dto.IdRespV1;
+import com.urlshortener.controller.dto.UrlShortListRespV1;
+import com.urlshortener.controller.req.UrlShortCreateReqV1;
 import com.urlshortener.security.AuthUtil;
 import com.urlshortener.service.UrlShortService;
 import lombok.RequiredArgsConstructor;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping()
 @RequiredArgsConstructor
-public class UrlController {
+public class UrlControllerV1 {
 
 
     private final UrlShortService urlShortService;
 
 
     @PostMapping("/api/v1/url/shorten")
-    public IdResp create(@RequestBody UrlShortCreateReq req) {
+    public IdRespV1 create(@RequestBody UrlShortCreateReqV1 req) {
         int userId = AuthUtil.getUserId();
         int urlShortId = urlShortService.create(userId, req);
-        return new IdResp(urlShortId);
+        return new IdRespV1(urlShortId);
     }
 
 
@@ -33,8 +33,8 @@ public class UrlController {
 
 
     @GetMapping("/api/v1/url/shorten/my")
-    public UrlShortListResp getUserUrls(@RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "10") int pageSize) {
+    public UrlShortListRespV1 getUserUrls(@RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int pageSize) {
         int userId = AuthUtil.getUserId();
         return urlShortService.getUserUrls(userId,page,pageSize);
     }

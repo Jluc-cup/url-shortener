@@ -1,13 +1,13 @@
 package com.urlshortener.service;
 
-import com.urlshortener.controller.dto.SignInResp;
-import com.urlshortener.controller.dto.SignUpResp;
-import com.urlshortener.controller.req.SignInReq;
-import com.urlshortener.controller.req.SignUpReq;
+import com.urlshortener.controller.dto.SignInRespV1;
+import com.urlshortener.controller.dto.SignUpRespV1;
+import com.urlshortener.controller.req.SignInReqV1;
+import com.urlshortener.controller.req.SignUpReqV1;
 
 public interface AuthService {
 
-    SignInResp signIn(SignInReq req);
+    SignInRespV1 signIn(SignInReqV1 req);
 
-    SignUpResp signUp(SignUpReq req);
+    SignUpRespV1 signUp(SignUpReqV1 req);
 }

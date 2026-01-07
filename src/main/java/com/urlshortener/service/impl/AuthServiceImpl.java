@@ -1,9 +1,9 @@
 package com.urlshortener.service.impl;
 
-import com.urlshortener.controller.dto.SignInResp;
-import com.urlshortener.controller.dto.SignUpResp;
-import com.urlshortener.controller.req.SignInReq;
-import com.urlshortener.controller.req.SignUpReq;
+import com.urlshortener.controller.dto.SignInRespV1;
+import com.urlshortener.controller.dto.SignUpRespV1;
+import com.urlshortener.controller.req.SignInReqV1;
+import com.urlshortener.controller.req.SignUpReqV1;
 import com.urlshortener.dao.UserDao;
 import com.urlshortener.model.entity.TokenEntity;
 import com.urlshortener.model.entity.UserEntity;
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public SignInResp signIn(SignInReq req) {
+    public SignInRespV1 signIn(SignInReqV1 req) {
         final UserEntity user = userDao.getByEmail(req.email());
 
         if (user == null) {
@@ -39,11 +39,11 @@ public class AuthServiceImpl implements AuthService {
         }
 
         final TokenEntity token = tokenService.generate(user);
-        return new SignInResp(token.getToken(), null);
+        return new SignInRespV1(token.getToken(), null);
     }
 
     @Override
-    public SignUpResp signUp(SignUpReq req) {
+    public SignUpRespV1 signUp(SignUpReqV1 req) {
         if (userDao.existByEmail(req.email())) {
             throw new RuntimeException();
         }
@@ -51,11 +51,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Transactional
-    public SignUpResp singUpTr(SignUpReq req) {
+    public SignUpRespV1 singUpTr(SignUpReqV1 req) {
         final UserEntity user = UserEntity.create(req);
         userDao.saveAndFlush(user);
         final TokenEntity token = tokenService.generate(user);
-        return new SignUpResp(token.getToken(), null);
+        return new SignUpRespV1(token.getToken(), null);
     }
 
 }

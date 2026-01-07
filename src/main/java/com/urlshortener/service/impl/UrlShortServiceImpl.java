@@ -1,8 +1,8 @@
 package com.urlshortener.service.impl;
 
-import com.urlshortener.controller.dto.UrlShortItemResp;
-import com.urlshortener.controller.dto.UrlShortListResp;
-import com.urlshortener.controller.req.UrlShortCreateReq;
+import com.urlshortener.controller.dto.UrlShortItemRespV1;
+import com.urlshortener.controller.dto.UrlShortListRespV1;
+import com.urlshortener.controller.req.UrlShortCreateReqV1;
 import com.urlshortener.dao.UrlDao;
 import com.urlshortener.dao.UrlShortDao;
 import com.urlshortener.dao.UserDao;
@@ -34,14 +34,14 @@ public class UrlShortServiceImpl implements UrlShortService {
     }
 
     @Override
-    public int create(int userId, UrlShortCreateReq req) {
+    public int create(int userId, UrlShortCreateReqV1 req) {
         final UserEntity user = userDao.getById(userId);// race condition
         // todo descus about race condition hash generate retry ?
         return self.createTr(user, req);
     }
 
     @Transactional
-    public int createTr(UserEntity user, UrlShortCreateReq req) {
+    public int createTr(UserEntity user, UrlShortCreateReqV1 req) {
         final UrlEntity url = getOrCreate(req.originalUrl());
         final UrlShortEntity urlShort = UrlShortEntity.create(user, url, req, null);
 
@@ -82,11 +82,11 @@ public class UrlShortServiceImpl implements UrlShortService {
 
 
     @Override
-    public UrlShortListResp getUserUrls(int userId, int page, int pageSize) {
+    public UrlShortListRespV1 getUserUrls(int userId, int page, int pageSize) {
         final List<UrlShortEntity> urlShortList = urlShortDao.getUserUrls(userId, page, pageSize);
         final int totalSize = urlShortDao.getCountByUserId(userId);
 
-        final List<UrlShortItemResp> items = urlShortList.stream().map(UrlShortItemResp::new).toList();
-        return new UrlShortListResp(items, totalSize);
+        final List<UrlShortItemRespV1> items = urlShortList.stream().map(UrlShortItemRespV1::new).toList();
+        return new UrlShortListRespV1(items, totalSize);
     }
 }
